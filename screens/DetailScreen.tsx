@@ -1,9 +1,8 @@
-import { ParamListBase, RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
-import { Dinosaur } from "../App";
 
 interface DetailScreenProps {
     url: string;

@@ -9,19 +9,10 @@ import DetailScreen from './screens/DetailScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
+import { Dinosaur } from './types';
+import { DinoContext } from './context';
 
-export interface Dinosaur {
-  Name:        string;
-  Description: string;
-}
 
-interface IDinoContext {
-  dinosaurs: Dinosaur[];
-}
-
-export const DinoContext = React.createContext<IDinoContext>({
-  dinosaurs: [],
-});
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +33,7 @@ export default function App() {
   },[])
 
   return (
-    <DinoContext.Provider value={{dinosaurs: dinosaurs}}>
+    <DinoContext.Provider value={{dinosaurs: dinosaurs, loading: loading, refresh: () => { getDinosaur(); } }}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="List" component={ListScreen} />

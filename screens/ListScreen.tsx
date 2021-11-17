@@ -3,7 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useContext, useEffect, useState } from "react"
 import { View , StyleSheet, FlatList, Text, TouchableOpacity, Button} from "react-native"
-import { DinoContext, Dinosaur } from "../App"
+import { DinoContext } from "../context";
+import { Dinosaur } from "../types";
 
 interface ListScreenProps {
 
@@ -29,7 +30,7 @@ const ListItem = ({dinosaur, selected, onPress}: ListItemProps) => {
 const ListScreen = ({} : ListScreenProps) => {
     const navigation : StackNavigationProp<any> = useNavigation();
 
-    let { dinosaurs } = useContext(DinoContext);
+    let { dinosaurs, refresh, loading } = useContext(DinoContext);
     const [selectedDinosaur, setSelectedDinosaur] = useState<Dinosaur>();
 
     const setAsFavorite = async () => {
@@ -51,7 +52,8 @@ const ListScreen = ({} : ListScreenProps) => {
     return (
         <View style={styles.container}>
             <FlatList
-                
+                refreshing={loading}
+                onRefresh={refresh}
                 data={dinosaurs}
                 renderItem={({item}) => <ListItem dinosaur={item} selected={item.Name == selectedDinosaur?.Name} onPress={() => {setSelectedDinosaur(item)}}/>}
                 keyExtractor={(item) => item.Name}
